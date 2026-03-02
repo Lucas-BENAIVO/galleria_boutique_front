@@ -1,0 +1,162 @@
+/* =====================================================
+   ventes-par-jour.component.scss
+   ===================================================== */
+
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.ventes-par-jour-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+}
+
+/* ── En-tête ── */
+.ventes-par-jour-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1e2340;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+}
+
+/* ── Filtres ── */
+.ventes-par-jour-filtres {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+
+  label {
+    font-size: 0.74rem;
+    font-weight: 600;
+    color: #aab0c8;
+    white-space: nowrap;
+  }
+
+  select {
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #1e2340;
+    background: #f1f3f8;
+    border: 1px solid #e4e7f0;
+    border-radius: 6px;
+    padding: 4px 8px;
+    cursor: pointer;
+    outline: none;
+
+    &:focus { border-color: #6c8cff; }
+  }
+
+  button {
+    font-family: inherit;
+    font-size: 0.76rem;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 6px;
+    border: 1px solid #e4e7f0;
+    background: #f1f3f8;
+    color: #8b93b0;
+    cursor: pointer;
+    transition: background 0.18s, color 0.18s, border-color 0.18s;
+
+      &:hover:not([disabled]), &:focus:not([disabled]) {
+        background: #444;
+        color: #fff;
+        border-color: #444;
+      }
+
+      &.active,
+      &[aria-pressed="true"],
+      &:active:not([disabled]),
+      &:focus-visible:not([disabled]) {
+        background: #111 !important;
+        color: #fff !important;
+        border-color: #111 !important;
+        box-shadow: none !important;
+        filter: none !important;
+      }
+
+      &[disabled] {
+        background: #111 !important;
+        color: #fff !important;
+        border-color: #111 !important;
+        cursor: default;
+        box-shadow: none !important;
+        filter: none !important;
+      }
+
+        &[disabled]:hover,
+        &[disabled]:focus {
+          background: #bbb !important;
+          color: #fff !important;
+          border-color: #bbb !important;
+        }
+  }
+}
+
+/* ── Canvas ── */
+canvas {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 220px;
+  background: transparent !important;
+  display: block;
+  margin-top: 4px;
+}
+
+/* ── Tableau ── */
+.tableau-ventes {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 8px;
+  font-size: 0.85rem;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+
+  th {
+    padding: 9px 12px;
+    text-align: left;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #aab0c8;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-bottom: 2px solid #f1f3f8;
+    background: transparent;
+  }
+
+  td {
+    padding: 10px 12px;
+    color: #1e2340;
+    font-weight: 500;
+    border-bottom: 1px solid #f1f3f8;
+    vertical-align: middle;
+  }
+
+  tbody tr {
+    transition: background 0.14s;
+
+    &:hover td { background: #f6f8ff; }
+    &:last-child td { border-bottom: none; }
+  }
+}

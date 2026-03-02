@@ -1,0 +1,33 @@
+
+<div class="statistiques-page">
+  <div class="statistiques-header">
+    <div class="statistiques-filtres">
+      <label for="mois">Mois :</label>
+      <select id="mois">
+        <option>Janvier</option>
+        <option>Février</option>
+        <option>Mars</option>
+        <option>Avril</option>
+        <option>Mai</option>
+        <option>Juin</option>
+        <option>Juillet</option>
+        <option>Août</option>
+        <option>Septembre</option>
+        <option>Octobre</option>
+        <option>Novembre</option>
+        <option>Décembre</option>
+      </select>
+      <button class="switch-view">Afficher tableau</button>
+    </div>
+    <h2>Statistiques de la boutique</h2>
+  </div>
+  <div class="statistiques-graphiques">
+    <div class="graphiques-row">
+      <div class="graphe-container"><app-top-produits></app-top-produits></div>
+      <div class="graphe-container"><app-ventes-par-jour></app-ventes-par-jour></div>
+    </div>
+    <div class="graphiques-row">
+      <div class="graphe-container graphe-seul"><app-top-clients></app-top-clients></div>
+    </div>
+  </div>
+</div>

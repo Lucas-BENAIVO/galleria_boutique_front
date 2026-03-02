@@ -1,0 +1,158 @@
+<div class="stock-list-container">
+  <div class="stock-list-header">
+    <h2>Gestion des stocks</h2>
+    <div class="tabs">
+      <button class="tab-btn" [class.active]="activeTab === 'stocks'" (click)="switchTab('stocks')">
+        <span class="iconify" data-icon="solar:box-bold-duotone" style="font-size: 1.1em;"></span>
+        Inventaire
+      </button>
+      <button class="tab-btn" [class.active]="activeTab === 'transactions'" (click)="switchTab('transactions')">
+        <span class="iconify" data-icon="solar:history-bold-duotone" style="font-size: 1.1em;"></span>
+        Historique
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="loading || loadingTransactions" class="loading-message">Chargement...</div>
+  <div *ngIf="error" class="error-message">{{ error }}</div>
+
+  <!-- Stocks Tab -->
+  <ng-container *ngIf="activeTab === 'stocks' && !loading && !error">
+    <div class="filter-row">
+      <select class="filter-select" [(ngModel)]="filterStatus">
+        <option value="">Tous les statuts</option>
+        <option value="OK">Stock OK</option>
+        <option value="Faible">Stock faible</option>
+        <option value="Rupture">Rupture de stock</option>
+      </select>
+    </div>
+
+    <table class="stock-table">
+      <thead>
+        <tr>
+          <th>Produit</th>
+          <th>Quantité</th>
+          <th>Seuil d'alerte</th>
+          <th>Statut</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let stock of paginatedStocks" [class.low-stock]="getStockStatus(stock) !== 'OK'">
+          <td>
+            <div class="product-info">
+              <div class="product-avatar">
+                <img *ngIf="stock.product.images?.length" [src]="stock.product.images![0]" alt="">
+                <span *ngIf="!stock.product.images?.length" class="iconify" data-icon="solar:box-bold-duotone" style="font-size: 1.6em;"></span>
+              </div>
+              <div>
+                <div class="product-name">{{ stock.product.name }}</div>
+                <div class="product-price">{{ stock.product.price | number:'1.0-0' }} Ar</div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="quantity-controls">
+              <button class="qty-btn" (click)="incrementStock(stock, -1)" [disabled]="stock.quantity === 0">-</button>
+              <span class="qty-value">{{ stock.quantity }}</span>
+              <button class="qty-btn" (click)="incrementStock(stock, 1)">+</button>
+            </div>
+          </td>
+          <td>{{ stock.alertThreshold }}</td>
+          <td>
+            <span class="status" [ngClass]="getStatusClass(stock)">
+              {{ getStockStatus(stock) }}
+            </span>
+          </td>
+          <td>
+            <button class="edit-btn" (click)="openEditModal(stock)">
+              <span class="iconify" data-icon="solar:settings-minimalistic-bold-duotone" style="font-size: 1.2em;"></span>
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="filteredStocks.length === 0">
+          <td colspan="5" style="text-align: center; padding: 2rem;">Aucun produit trouvé</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div class="pagination" *ngIf="totalPages > 1">
+      <button class="pagination-btn" (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">Précédent</button>
+      <button *ngFor="let page of getPageNumbers()" class="pagination-btn" [class.active]="page === currentPage" (click)="goToPage(page)">{{ page }}</button>
+      <button class="pagination-btn" (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">Suivant</button>
+    </div>
+    <div class="pagination-info" *ngIf="filteredStocks.length > 0">
+      {{ (currentPage - 1) * pageSize + 1 }}-{{ currentPage * pageSize > filteredStocks.length ? filteredStocks.length : currentPage * pageSize }} sur {{ filteredStocks.length }} stocks
+    </div>
+  </ng-container>
+
+  <!-- Transactions Tab -->
+  <ng-container *ngIf="activeTab === 'transactions' && !loadingTransactions">
+    <table class="stock-table transactions-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Produit</th>
+          <th>Type</th>
+          <th>Quantité</th>
+          <th>Stock avant</th>
+          <th>Stock après</th>
+          <th>Motif</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let tx of transactions">
+          <td>{{ tx.createdAt | date:'dd/MM/yyyy HH:mm' }}</td>
+          <td>
+            <div class="product-info">
+              <div class="product-avatar small">
+                <img *ngIf="tx.productId.images?.length" [src]="tx.productId.images![0]" alt="">
+                <span *ngIf="!tx.productId.images?.length" class="iconify" data-icon="solar:box-bold-duotone" style="font-size: 1.2em;"></span>
+              </div>
+              <span>{{ tx.productId.name }}</span>
+            </div>
+          </td>
+          <td>
+            <span class="transaction-type" [ngClass]="getTransactionTypeClass(tx.type)">
+              {{ getTransactionTypeLabel(tx.type) }}
+            </span>
+          </td>
+          <td class="qty-cell" [class.positive]="tx.type === 'ENTREE' || tx.type === 'RETOUR'" [class.negative]="tx.type === 'SORTIE' || tx.type === 'VENTE'">
+            {{ tx.type === 'ENTREE' || tx.type === 'RETOUR' ? '+' : '-' }}{{ tx.quantity }}
+          </td>
+          <td>{{ tx.previousStock }}</td>
+          <td>{{ tx.newStock }}</td>
+          <td>{{ tx.reason || '-' }}</td>
+        </tr>
+        <tr *ngIf="transactions.length === 0">
+          <td colspan="7" style="text-align: center; padding: 2rem;">Aucune transaction</td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-container>
+
+  <!-- Edit Modal -->
+  <div *ngIf="editingStock" class="modal-overlay">
+    <div class="modal-content">
+      <h3>Modifier le stock</h3>
+      <div class="modal-body">
+        <p class="product-label">{{ editingStock.product.name }}</p>
+        
+        <label>Quantité</label>
+        <input type="number" [(ngModel)]="editQuantity" min="0">
+        
+        <label>Seuil d'alerte</label>
+        <input type="number" [(ngModel)]="editThreshold" min="1">
+
+        <label>Motif (optionnel)</label>
+        <input type="text" [(ngModel)]="editReason" placeholder="Ex: Réapprovisionnement">
+      </div>
+      <div class="modal-actions">
+        <button class="cancel-btn" (click)="closeEditModal()">Annuler</button>
+        <button class="save-btn" (click)="saveStock()">Enregistrer</button>
+      </div>
+    </div>
+    <div class="modal-backdrop" (click)="closeEditModal()"></div>
+  </div>
+</div>

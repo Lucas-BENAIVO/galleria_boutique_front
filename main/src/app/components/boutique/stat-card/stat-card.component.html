@@ -1,0 +1,26 @@
+<div class="stat-card">
+  <div class="card-header">
+    <div class="icon-container" [style.color]="iconColor">
+      <mat-icon>{{ icon }}</mat-icon>
+    </div>
+    <!-- Badge pour action ou augmentation -->
+    <ng-container *ngIf="actionLabel || (change && isPositiveChange())">
+      <div class="action-badge"
+           [style.backgroundColor]="actionLabel ? actionColor : '#13deb9'">
+        {{ actionLabel ? actionLabel : change }}
+      </div>
+    </ng-container>
+  </div>
+  
+  <div class="card-content">
+    <p class="card-label">{{ label }}</p>
+    <p class="card-value">{{ value }}</p>
+    <!-- Afficher la variation uniquement si ce n'est pas déjà en badge -->
+    <p class="card-change" [class.positive]="changeType === 'positive'"
+       [class.negative]="changeType === 'negative'"
+       *ngIf="change && !isPositiveChange()">
+      <mat-icon class="change-icon">{{ changeIcon }}</mat-icon>
+      <span>{{ change }}</span>
+    </p>
+  </div>
+</div>

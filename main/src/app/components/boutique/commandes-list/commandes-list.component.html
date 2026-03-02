@@ -1,0 +1,136 @@
+<div class="commandes-list-container">
+  <div class="commandes-list-header">
+    <h2>Gestion des commandes</h2>
+    <div class="commandes-list-actions">
+      <select class="filter-select" [(ngModel)]="selectedStatus">
+        <option value="">Tous statuts</option>
+        <option value="PREPARATION">En préparation</option>
+        <option value="EN_COURS">En cours</option>
+        <option value="LIVRE">Livrée</option>
+        <option value="PENDING">En attente paiement</option>
+        <option value="CANCELLED">Annulée</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="isLoading" class="loading-state">
+    <p>Chargement des commandes...</p>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="errorMessage && !isLoading" class="error-state">
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <!-- Empty -->
+  <div *ngIf="!isLoading && !errorMessage && filteredOrders.length === 0" class="empty-state">
+    <p>Aucune commande trouvée</p>
+  </div>
+
+  <table *ngIf="!isLoading && filteredOrders.length > 0" class="commandes-table">
+    <thead>
+      <tr>
+        <th>Client</th>
+        <th>Date</th>
+        <th>Articles</th>
+        <th>Total</th>
+        <th>Livraison</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of paginatedOrders">
+        <td>
+          <div class="commande-info">
+            <div class="commande-avatar">{{ getClientName(order).charAt(0) }}</div>
+            <div>
+              <div class="commande-client">{{ getClientName(order) }}</div>
+              <div class="commande-id">#{{ order._id.slice(-8) }}</div>
+            </div>
+          </div>
+        </td>
+        <td>{{ order.createdAt | date:'dd/MM/yyyy HH:mm' }}</td>
+        <td>{{ order.items.length }} article(s)</td>
+        <td><b>{{ order.totalAmount | number:'1.0-0' }} Ar</b></td>
+        <td>
+          <span class="delivery-type" [class.retrait]="order.deliveryType === 'RETRAIT'">
+            {{ order.deliveryType === 'RETRAIT' ? 'Retrait' : 'Livraison' }}
+          </span>
+        </td>
+        <td>
+          <span class="status"
+            [ngClass]="{
+              'livre': getOverallStatus(order) === 'LIVRE',
+              'en-cours': getOverallStatus(order) === 'EN_COURS',
+              'preparation': getOverallStatus(order) === 'PREPARATION',
+              'annulee': getOverallStatus(order) === 'CANCELLED'
+            }">
+            {{ orderService.getStatusLabel(getOverallStatus(order)) }}
+          </span>
+        </td>
+        <td>
+          <button class="edit-btn" (click)="openEditForm(order)">
+            <span class="iconify" data-icon="solar:eye-line-duotone" style="font-size: 1.15em;"></span>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Pagination -->
+  <div class="pagination" *ngIf="!isLoading && totalPages > 1">
+    <button class="pagination-btn" (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">Précédent</button>
+    <button *ngFor="let page of getPageNumbers()" class="pagination-btn" [class.active]="page === currentPage" (click)="goToPage(page)">{{ page }}</button>
+    <button class="pagination-btn" (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">Suivant</button>
+  </div>
+  <div class="pagination-info" *ngIf="!isLoading && filteredOrders.length > 0">
+    {{ (currentPage - 1) * pageSize + 1 }}-{{ currentPage * pageSize > filteredOrders.length ? filteredOrders.length : currentPage * pageSize }} sur {{ filteredOrders.length }} commandes
+  </div>
+
+  <!-- Modal Détails Commande -->
+  <div *ngIf="showForm && editCommande" class="modal-overlay">
+    <div class="modal-content order-details-modal">
+      <div class="modal-header">
+        <h3>Commande #{{ editCommande._id.slice(-8) }}</h3>
+        <button class="close-btn" (click)="closeForm()">×</button>
+      </div>
+      
+      <div class="order-info">
+        <p><strong>Client:</strong> {{ getClientName(editCommande) }}</p>
+        <p><strong>Email:</strong> {{ getClientEmail(editCommande) }}</p>
+        <p><strong>Date:</strong> {{ editCommande.createdAt | date:'dd/MM/yyyy à HH:mm' }}</p>
+        <p><strong>Type:</strong> {{ editCommande.deliveryType === 'RETRAIT' ? 'Retrait en boutique' : 'Livraison' }}</p>
+        <p><strong>Paiement:</strong> {{ orderService.getStatusLabel(editCommande.paymentStatus) }}</p>
+      </div>
+
+      <h4>Articles</h4>
+      <div class="order-items">
+        <div class="order-item" *ngFor="let item of editCommande.items">
+          <div class="item-info">
+            <span class="item-qty">{{ item.quantity }}x</span>
+            <span class="item-name">{{ item.product?.name || 'Produit' }}</span>
+            <span class="item-price">{{ item.price | number:'1.0-0' }} Ar</span>
+          </div>
+          <div class="item-status">
+            <select [ngModel]="item.status" (ngModelChange)="updateItemStatus(editCommande._id, item.productId, $event)">
+              <option value="PREPARATION">En préparation</option>
+              <option value="EN_COURS">En cours</option>
+              <option value="LIVRE">Livré</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="order-total">
+        <strong>Total: {{ editCommande.totalAmount | number:'1.0-0' }} Ar</strong>
+      </div>
+
+      <div class="modal-actions">
+        <button class="close-btn-full" (click)="closeForm()">Fermer</button>
+      </div>
+    </div>
+    <div class="modal-backdrop" (click)="closeForm()"></div>
+  </div>
+</div>

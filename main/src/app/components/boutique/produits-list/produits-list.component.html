@@ -1,0 +1,93 @@
+
+<div class="produits-list-container">
+  <!-- Filtre et pagination ici -->
+  <div class="produits-list-header">
+    <h2>Inventaire des produits</h2>
+    <div class="produits-list-actions">
+      <button class="add-btn" (click)="openAddForm()">Ajouter un produit</button>
+      <select class="filter-select" [(ngModel)]="selectedCategory">
+        <option value="">Toutes catégories</option>
+        <option *ngFor="let cat of categories" [value]="cat._id">{{ cat.name }}</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="isLoading" class="loading-state">
+    <p>Chargement des produits...</p>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="errorMessage && !isLoading" class="error-state">
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <!-- Empty -->
+  <div *ngIf="!isLoading && !errorMessage && filteredProducts.length === 0" class="empty-state">
+    <p>Aucun produit trouvé</p>
+    <button class="add-btn" (click)="openAddForm()">Ajouter votre premier produit</button>
+  </div>
+
+  <table *ngIf="!isLoading && filteredProducts.length > 0" class="produits-table">
+    <thead>
+      <tr>
+        <th>Produit</th>
+        <th>Catégorie</th>
+        <th>Prix</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of paginatedProducts">
+        <td>
+          <div class="produit-info">
+            <img [src]="product.images[0] || product.image || 'assets/images/products/placeholder.jpg'" [alt]="product.name" />
+            <div>
+              <div class="produit-nom">{{ product.name }}</div>
+              <div class="produit-desc">{{ product.description | slice:0:50 }}{{ product.description && product.description.length > 50 ? '...' : '' }}</div>
+            </div>
+          </div>
+        </td>
+        <td>{{ getCategoryName(product.categoryId) }}</td>
+        <td><b>{{ product.price | number:'1.0-0' }} Ar</b></td>
+        <td>
+          <span class="status" [class.active]="product.isActive" [class.inactive]="!product.isActive">
+            {{ product.isActive ? 'Actif' : 'Inactif' }}
+          </span>
+        </td>
+        <td>
+          <button class="edit-btn" (click)="openEditForm(product)">
+            <span class="iconify" data-icon="solar:server-square-update-line-duotone" style="font-size: 1.15em;"></span>
+          </button>
+          <button class="delete-btn" (click)="deleteProduct(product)">
+            <span class="iconify" data-icon="solar:trash-bin-trash-line-duotone" style="font-size: 1.3em;"></span>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Pagination -->
+  <div class="pagination" *ngIf="!isLoading && totalPages > 1">
+    <button class="pagination-btn" (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">Précédent</button>
+    <button *ngFor="let page of getPageNumbers()" class="pagination-btn" [class.active]="page === currentPage" (click)="goToPage(page)">{{ page }}</button>
+    <button class="pagination-btn" (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">Suivant</button>
+  </div>
+  <div class="pagination-info" *ngIf="!isLoading && filteredProducts.length > 0">
+    {{ (currentPage - 1) * pageSize + 1 }}-{{ currentPage * pageSize > filteredProducts.length ? filteredProducts.length : currentPage * pageSize }} sur {{ filteredProducts.length }} produits
+  </div>
+
+  <!-- Modal Formulaire -->
+  <div *ngIf="showForm" class="modal-overlay">
+    <div class="modal-content">
+      <app-produits-form
+        [product]="editProduct"
+        [categories]="categories"
+        (save)="onSaveProduct($event)"
+        (cancel)="closeForm()">
+      </app-produits-form>
+    </div>
+    <div class="modal-backdrop" (click)="closeForm()"></div>
+  </div>
+</div>

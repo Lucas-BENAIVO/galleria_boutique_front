@@ -1,0 +1,44 @@
+<div class="produits-form-modal">
+  <div class="produits-form-container">
+    <h3>{{ product ? 'Modifier le produit' : 'Ajouter un produit' }}</h3>
+    <form (ngSubmit)="submit()">
+      <label>Nom du produit</label>
+      <input [(ngModel)]="formData.name" name="name" required placeholder="Nom du produit" />
+      
+      <label>Description</label>
+      <textarea [(ngModel)]="formData.description" name="description" rows="3" placeholder="Description du produit"></textarea>
+      
+      <label>Catégorie</label>
+      <select [(ngModel)]="formData.categoryId" name="categoryId" required>
+        <option value="">Sélectionner une catégorie</option>
+        <option *ngFor="let cat of categories" [value]="cat._id">{{ cat.name }}</option>
+      </select>
+      
+      <label>Prix (Ar)</label>
+      <input [(ngModel)]="formData.price" name="price" type="number" required min="0" placeholder="Prix en Ariary" />
+      
+      <label>Status</label>
+      <select [(ngModel)]="formData.isActive" name="isActive">
+        <option [ngValue]="true">Actif</option>
+        <option [ngValue]="false">Inactif</option>
+      </select>
+
+      <label>Images (URLs)</label>
+      <div class="image-input-row">
+        <input [(ngModel)]="imageUrl" name="imageUrl" placeholder="URL de l'image" />
+        <button type="button" class="add-image-btn" (click)="addImage()">+</button>
+      </div>
+      <div class="images-list" *ngIf="formData.images.length > 0">
+        <div class="image-item" *ngFor="let img of formData.images; let i = index">
+          <img [src]="img" alt="Preview" />
+          <button type="button" class="remove-image-btn" (click)="removeImage(i)">×</button>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="submit-btn">{{ product ? 'Enregistrer' : 'Ajouter' }}</button>
+        <button type="button" class="cancel-btn" (click)="close()">Annuler</button>
+      </div>
+    </form>
+  </div>
+</div>

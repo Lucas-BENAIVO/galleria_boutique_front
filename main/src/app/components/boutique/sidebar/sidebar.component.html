@@ -1,0 +1,67 @@
+<!-- Backdrop for mobile -->
+<div class="sidebar-backdrop" [class.show]="isOpen" (click)="closeSidebar()"></div>
+
+<div class="sidebar" [class.open]="isOpen">
+  <!-- Close button for mobile -->
+  <button class="sidebar-close-btn" (click)="closeSidebar()">
+    <mat-icon>close</mat-icon>
+  </button>
+  
+  <div class="sidebar-header">
+    <div class="navbar-logo">
+      <a href="/landing">
+        <img src="assets/images/logos/galleria.png" alt="NOSTRA Logo" style="height: 32px; width: auto;" />
+      </a>
+    </div>
+  </div>
+
+  <!-- Section Menu Principal -->
+  <div class="menu-section">
+    <p class="section-title">MENU PRINCIPAL</p>
+    <nav>
+      <ul class="menu-list">
+        <li *ngFor="let item of menuItems" 
+            [class.active]="item.active"
+            (click)="setActive(item)">
+          <a [routerLink]="item.route" class="menu-item">
+            <mat-icon class="menu-icon">{{ item.icon }}</mat-icon>
+            <span class="menu-label">{{ item.label }}</span>
+            <!-- badge supprimé car non utilisé -->
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <!-- Section Gestion de stock -->
+  <div class="menu-section">
+    <p class="section-title">GESTION DE STOCK</p>
+    <nav>
+      <ul class="menu-list">
+        <li *ngFor="let item of accountItems" 
+            [class.active]="item.active">
+          <a [routerLink]="item.route" class="menu-item" (click)="setActive(item)">
+            <mat-icon class="menu-icon">{{ item.icon }}</mat-icon>
+            <span class="menu-label">{{ item.label }}</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <!-- Section Paramètres -->
+  <div class="menu-section settings-section">
+    <nav>
+      <ul class="menu-list">
+        <li *ngFor="let item of settingsItems" 
+            [class.active]="item.active"
+            (click)="setActive(item)">
+          <a [routerLink]="item.route" class="menu-item">
+            <mat-icon class="menu-icon">{{ item.icon }}</mat-icon>
+            <span class="menu-label">{{ item.label }}</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>

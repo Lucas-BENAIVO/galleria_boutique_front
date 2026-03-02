@@ -1,0 +1,41 @@
+<div class="top-clients-card">
+  <div class="top-clients-header">
+    <h3>Top clients</h3>
+    <div class="top-clients-filtres">
+      <label for="mois-clients">Mois :</label>
+      <select id="mois-clients" [value]="selectedMonth" (change)="onMonthChange($event)">
+        <option>Janvier</option>
+        <option>Février</option>
+        <option>Mars</option>
+        <option>Avril</option>
+        <option>Mai</option>
+        <option>Juin</option>
+        <option>Juillet</option>
+        <option>Août</option>
+        <option>Septembre</option>
+        <option>Octobre</option>
+        <option>Novembre</option>
+        <option>Décembre</option>
+      </select>
+      <button (click)="switchView('graph')" [disabled]="viewType==='graph'">Graphique</button>
+      <button (click)="switchView('table')" [disabled]="viewType==='table'">Tableau</button>
+    </div>
+  </div>
+  <div *ngIf="viewType==='graph'">
+    <canvas #pieChartCanvas></canvas>
+  </div>
+  <table *ngIf="viewType==='table'" class="tableau-clients">
+    <thead>
+      <tr>
+        <th>Client</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let c of clients">
+        <td>{{ c.nom }}</td>
+        <td>{{ c.total | number:'1.0-0' }} Ar</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

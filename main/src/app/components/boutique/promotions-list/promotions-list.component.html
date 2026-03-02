@@ -1,0 +1,86 @@
+<div class="promotions-list-container">
+  <div class="promotions-list-header">
+    <h2>Gestion des promotions</h2>
+    <div class="promotions-list-actions">
+      <button class="add-btn" (click)="openAddForm()">Ajouter une promotion</button>
+      <select class="filter-select" [(ngModel)]="selectedStatus">
+        <option value="">Tous statuts</option>
+        <option value="Actif">Actif</option>
+        <option value="À venir">À venir</option>
+        <option value="Expiré">Expiré</option>
+      </select>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="loading-message">Chargement...</div>
+  <div *ngIf="error" class="error-message">{{ error }}</div>
+
+  <table class="promotions-table" *ngIf="!loading && !error">
+    <thead>
+      <tr>
+        <th>Titre</th>
+        <th>Réduction</th>
+        <th>Date début</th>
+        <th>Date fin</th>
+        <th>Statut</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let promo of paginatedPromotions">
+        <td>
+          <div class="promo-info">
+            <div class="promo-avatar">
+              <span class="iconify" data-icon="solar:tag-price-bold-duotone" style="font-size: 1.4em;"></span>
+            </div>
+            <div>
+              <div class="promo-nom">{{ promo.title }}</div>
+            </div>
+          </div>
+        </td>
+        <td><b>{{ promo.discountPercent }}%</b></td>
+        <td>{{ promo.startDate | date:'dd/MM/yyyy' }}</td>
+        <td>{{ promo.endDate | date:'dd/MM/yyyy' }}</td>
+        <td>
+          <span class="status" [ngClass]="{
+            'actif': getStatus(promo) === 'Actif',
+            'inactif': getStatus(promo) === 'À venir',
+            'expire': getStatus(promo) === 'Expiré'
+          }">{{ getStatus(promo) }}</span>
+        </td>
+        <td>
+          <button class="edit-btn" (click)="openEditForm(promo)">
+          <span class="iconify" data-icon="solar:server-square-update-line-duotone" style="font-size: 1.15em;"></span>
+          </button>
+          <button class="delete-btn" (click)="deletePromotion(promo._id)">
+            <span class="iconify" data-icon="solar:trash-bin-trash-line-duotone" style="font-size: 1.3em;"></span>
+          </button>
+        </td>
+      </tr>
+      <tr *ngIf="filteredPromotions.length === 0">
+        <td colspan="6" style="text-align: center; padding: 2rem;">Aucune promotion trouvée</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Pagination -->
+  <div class="pagination" *ngIf="!loading && totalPages > 1">
+    <button class="pagination-btn" (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">Précédent</button>
+    <button *ngFor="let page of getPageNumbers()" class="pagination-btn" [class.active]="page === currentPage" (click)="goToPage(page)">{{ page }}</button>
+    <button class="pagination-btn" (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">Suivant</button>
+  </div>
+  <div class="pagination-info" *ngIf="!loading && filteredPromotions.length > 0">
+    {{ (currentPage - 1) * pageSize + 1 }}-{{ currentPage * pageSize > filteredPromotions.length ? filteredPromotions.length : currentPage * pageSize }} sur {{ filteredPromotions.length }} promotions
+  </div>
+
+  <div *ngIf="showForm" class="modal-overlay">
+    <div class="modal-content">
+      <app-promotions-form
+        [promotion]="editPromotion"
+        (save)="onSavePromotion($event)"
+        (cancel)="closeForm()">
+      </app-promotions-form>
+    </div>
+    <div class="modal-backdrop" (click)="closeForm()"></div>
+  </div>
+</div>

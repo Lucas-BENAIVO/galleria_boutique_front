@@ -1,0 +1,84 @@
+.boutique-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  padding: 0.5rem 1.5rem;
+  min-height: 48px;
+}
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+// Mobile menu button - hidden on desktop
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  color: #333;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+  
+  &:hover {
+    background: #f3f4f6;
+  }
+  
+  mat-icon {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+  }
+}
+
+// Show hamburger menu on tablet/mobile
+@media (max-width: 991px) {
+  .mobile-menu-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.navbar-title {
+  font-family: 'Playfair Display', 'Cinzel', 'Times New Roman', serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #111;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-variant: small-caps;
+}
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.navbar-icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.3rem;
+  color: #888;
+}
+.navbar-user {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.navbar-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.navbar-username {
+  margin-left: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #6b7280;
+}

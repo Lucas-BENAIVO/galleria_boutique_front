@@ -1,0 +1,21 @@
+<h3>{{ promotion ? 'Modifier la promotion' : 'Ajouter une promotion' }}</h3>
+<form (ngSubmit)="submit()">
+
+  <label>Titre</label>
+  <input [(ngModel)]="formData.title" name="title" placeholder="Ex: Soldes d'été" required />
+
+  <label>Réduction (%)</label>
+  <input type="number" [(ngModel)]="formData.discountPercent" name="discountPercent" min="1" max="100" required />
+
+  <label>Date de début</label>
+  <input type="date" [(ngModel)]="formData.startDate" name="startDate" required />
+
+  <label>Date de fin</label>
+  <input type="date" [(ngModel)]="formData.endDate" name="endDate" required />
+
+  <div class="form-actions">
+    <button type="button" (click)="close()">Annuler</button>
+    <button type="submit">{{ promotion ? 'Enregistrer' : 'Ajouter' }}</button>
+  </div>
+
+</form>

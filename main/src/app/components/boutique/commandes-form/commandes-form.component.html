@@ -1,0 +1,25 @@
+<h3>{{ commande ? 'Modifier la commande' : 'Ajouter une commande' }}</h3>
+<form (ngSubmit)="submit()">
+
+  <label>Client</label>
+  <input [(ngModel)]="formData.client" name="client" placeholder="Nom du client" required />
+
+  <label>Date</label>
+  <input [(ngModel)]="formData.date" name="date" type="date" required />
+
+  <label>Total (Ar)</label>
+  <input [(ngModel)]="formData.total" name="total" type="number" placeholder="0" required />
+
+  <label>Status</label>
+  <select [(ngModel)]="formData.status" name="status">
+    <option value="En cours">En cours</option>
+    <option value="Livrée">Livrée</option>
+    <option value="Annulée">Annulée</option>
+  </select>
+
+  <div class="form-actions">
+    <button type="button" (click)="close()">Annuler</button>
+    <button type="submit">{{ commande ? 'Enregistrer' : 'Ajouter' }}</button>
+  </div>
+
+</form>

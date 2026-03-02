@@ -1,0 +1,59 @@
+<div class="profile-card">
+  <div *ngIf="loading" class="loading-message">Chargement...</div>
+  <div *ngIf="error" class="error-message">{{ error }}</div>
+
+  <ng-container *ngIf="boutique && !loading">
+    <div class="profile-header">
+      <div class="profile-avatar">
+        <img *ngIf="boutique.logo" [src]="boutique.logo" alt="Logo">
+        <span *ngIf="!boutique.logo" class="iconify" data-icon="solar:shop-bold-duotone" style="font-size: 4em; color: #666;"></span>
+      </div>
+      <div class="profile-title">
+        <h2>{{ boutique.name }}</h2>
+        <span class="status-badge" [class.validated]="boutique.isValidated">
+          {{ boutique.isValidated ? 'Validée' : 'En attente de validation' }}
+        </span>
+      </div>
+    </div>
+
+    <!-- View Mode -->
+    <div class="profile-info" *ngIf="!editMode">
+      <div class="info-row">
+        <span class="info-label">Nom de la boutique</span>
+        <span class="info-value">{{ boutique.name }}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Description</span>
+        <span class="info-value">{{ boutique.description || 'Aucune description' }}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Date de création</span>
+        <span class="info-value">{{ boutique.createdAt | date:'dd/MM/yyyy' }}</span>
+      </div>
+      
+      <button class="edit-btn" (click)="toggleEditMode()">
+        <span class="iconify" data-icon="solar:settings-minimalistic-bold-duotone" style="font-size: 1.1em;"></span>
+        Modifier les informations
+      </button>
+    </div>
+
+    <!-- Edit Mode -->
+    <div class="profile-edit" *ngIf="editMode">
+      <div class="form-group">
+        <label>Nom de la boutique</label>
+        <input type="text" [(ngModel)]="editData.name" placeholder="Nom de votre boutique">
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea [(ngModel)]="editData.description" rows="4" placeholder="Décrivez votre boutique..."></textarea>
+      </div>
+      
+      <div class="form-actions">
+        <button class="cancel-btn" (click)="toggleEditMode()" [disabled]="saving">Annuler</button>
+        <button class="save-btn" (click)="saveBoutique()" [disabled]="saving">
+          {{ saving ? 'Enregistrement...' : 'Enregistrer' }}
+        </button>
+      </div>
+    </div>
+  </ng-container>
+</div>

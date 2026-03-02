@@ -1,0 +1,148 @@
+.produits-form-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.produits-form-container {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 14px rgba(30,40,100,0.12);
+  padding: 32px 24px;
+  min-width: 400px;
+  max-width: 90vw;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.produits-form-container h3 {
+  margin-bottom: 18px;
+}
+
+.produits-form-container label {
+  display: block;
+  margin-top: 12px;
+  font-weight: 600;
+}
+
+.produits-form-container input,
+.produits-form-container select,
+.produits-form-container textarea {
+  width: 100%;
+  margin-top: 4px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #e4e7f0;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.produits-form-container textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.image-input-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+
+  input {
+    flex: 1;
+  }
+
+  .add-image-btn {
+    background: #111;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 1.2rem;
+    cursor: pointer;
+
+    &:hover {
+      background: #333;
+    }
+  }
+}
+
+.images-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 12px;
+
+  .image-item {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #e4e7f0;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .remove-image-btn {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      background: #dc3545;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      font-size: 14px;
+      line-height: 1;
+      cursor: pointer;
+    }
+  }
+}
+
+.form-actions {
+  margin-top: 18px;
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.submit-btn {
+  background: #111;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+
+  &:hover {
+    background: #333;
+  }
+}
+
+.cancel-btn {
+  background: #e4e7f0;
+  color: #222;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+
+  &:hover {
+    background: #d0d4e0;
+  }
+}

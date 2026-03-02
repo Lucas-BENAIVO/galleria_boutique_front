@@ -1,0 +1,266 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; background: #fff; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background: #fff; }
+
+/* ========== RESPONSIVE UTILITIES ========== */
+
+/* Container responsive */
+.container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* Grid responsive utilities */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -12px;
+}
+
+.col { flex: 1; padding: 0 12px; }
+
+/* Large screens */
+@media (min-width: 1200px) {
+  .container { max-width: 1320px; }
+  .hide-xl { display: none !important; }
+}
+
+/* Desktop */
+@media (max-width: 1199px) {
+  .container { max-width: 1140px; }
+  .hide-lg { display: none !important; }
+  
+  .stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
+}
+
+/* Tablet */
+@media (max-width: 991px) {
+  .container { max-width: 100%; padding: 0 16px; }
+  .hide-md { display: none !important; }
+  .show-md { display: block !important; }
+  
+  /* Tables scrollable */
+  .table-responsive { 
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Stats grid */
+  .stats-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 16px !important; }
+  
+  /* Dashboard adjustments */
+  .dashboard-container { padding: 16px; }
+  .content-wrapper { padding: 16px !important; }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .container { padding: 0 12px; }
+  .hide-sm { display: none !important; }
+  .show-sm { display: block !important; }
+  
+  .row { margin: 0 -8px; }
+  .col { padding: 0 8px; }
+  
+  /* Stats single column */
+  .stats-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
+  
+  /* Graphiques single column */
+  .graphiques-row { grid-template-columns: 1fr !important; }
+  .graphe-container.graphe-seul { width: 100% !important; }
+  
+  /* Content wrapper */
+  .content-wrapper { padding: 12px !important; }
+  
+  h1, .page-title { font-size: 1.5rem !important; }
+  h2 { font-size: 1.25rem !important; }
+}
+
+/* Small mobile */
+@media (max-width: 575px) {
+  .container { padding: 0 8px; }
+  
+  /* Full width buttons */
+  .btn-full-mobile { width: 100% !important; }
+  
+  /* Smaller text */
+  body { font-size: 14px; }
+}
+
+/* Mobile menu button - shown on tablet/mobile */
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  
+  @media (max-width: 991px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* Print styles */
+@media print {
+  .sidebar, .sidebar-backdrop, .mobile-menu-btn { display: none !important; }
+  .main-content { margin-left: 0 !important; }
+}
+
+/* ========== BOUTIQUE RESPONSIVE ENHANCEMENTS ========== */
+
+/* Tables responsive */
+@media (max-width: 991px) {
+  table, .stock-table, .produits-table, .commandes-table, .promotions-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+    
+    thead, tbody, tr { display: table; width: 100%; table-layout: fixed; }
+  }
+}
+
+@media (max-width: 767px) {
+  /* Table cells */
+  table th, table td {
+    padding: 8px 6px !important;
+    font-size: 0.85rem !important;
+  }
+  
+  /* Hide less important columns on mobile */
+  .hide-mobile-col { display: none !important; }
+  
+  /* Action buttons */
+  .edit-btn, .delete-btn, .view-btn {
+    padding: 6px !important;
+    min-width: 32px !important;
+  }
+}
+
+/* List containers responsive */
+@media (max-width: 767px) {
+  .produits-list-container,
+  .commandes-list-container,
+  .promotions-list-container,
+  .stock-list-container {
+    padding: 12px !important;
+    margin: 8px !important;
+    border-radius: 12px !important;
+  }
+  
+  /* List headers */
+  .produits-list-header,
+  .commandes-list-header,
+  .promotions-list-header,
+  .stock-list-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
+  
+  /* Actions area */
+  .produits-list-actions,
+  .commandes-list-actions,
+  .promotions-list-actions,
+  .stock-list-actions {
+    flex-wrap: wrap !important;
+    width: 100% !important;
+    gap: 8px !important;
+  }
+  
+  /* Search boxes */
+  .search-box, .search-box input {
+    width: 100% !important;
+    min-width: unset !important;
+  }
+  
+  /* Filter selects */
+  .filter-select {
+    flex: 1 !important;
+    min-width: 100px !important;
+  }
+  
+  /* Add buttons */
+  .add-btn { width: 100% !important; }
+}
+
+/* Modals responsive */
+@media (max-width: 767px) {
+  .modal-content {
+    width: 95% !important;
+    max-width: 95vw !important;
+    margin: 16px !important;
+    max-height: 85vh !important;
+    overflow-y: auto !important;
+  }
+  
+  .modal-header, .modal-footer {
+    padding: 12px 16px !important;
+  }
+  
+  .modal-body {
+    padding: 16px !important;
+  }
+}
+
+/* ========== PAGINATION STYLES ========== */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+
+.pagination-btn {
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  background: #fff;
+  color: #333;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+  
+.pagination-btn:hover:not(:disabled) {
+  background: #3498db;
+  color: white;
+  border-color: #3498db;
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-btn.active {
+  background: #3498db;
+  color: white;
+  border-color: #3498db;
+}
+
+.pagination-info {
+  text-align: center;
+  color: #666;
+  font-size: 0.85rem;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 575px) {
+  .pagination {
+    gap: 4px;
+  }
+  
+  .pagination-btn {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+}

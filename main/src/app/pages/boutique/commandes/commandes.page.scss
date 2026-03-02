@@ -1,0 +1,49 @@
+.commandes-page-container {
+  display: flex;
+  background: #f9fafb;
+  min-height: 100vh;
+}
+
+.commandes-page-container app-sidebar {
+  width: 260px;
+  min-width: 220px;
+  background: #fff;
+  box-shadow: 2px 0 8px rgba(30,40,100,0.07);
+  z-index: 2;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.main-content-inner {
+  flex: 1;
+  padding: 32px 24px;
+  width: 100%;
+}
+
+// Responsive - mobile
+@media (max-width: 991px) {
+  .commandes-page-container app-sidebar {
+    width: 0;
+    min-width: 0;
+  }
+  
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+  }
+  
+  .main-content-inner {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 575px) {
+  .main-content-inner {
+    padding: 12px 8px;
+  }
+}

@@ -1,0 +1,407 @@
+.commandes-list-container {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 2px 14px rgba(30,40,100,0.07);
+  padding: 32px 24px;
+  margin-bottom: 32px;
+}
+
+.commandes-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.commandes-list-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.add-btn {
+  background: #111;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.filter-select {
+  background: #f1f3f8;
+  border: 1px solid #e4e7f0;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 1rem;
+  color: #222;
+}
+
+.commandes-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 18px;
+}
+
+.commandes-table th,
+.commandes-table td {
+  padding: 12px 10px;
+  text-align: left;
+}
+
+.commandes-table th {
+  color: #aab0c8;
+  font-size: 0.95rem;
+  font-weight: 700;
+  background: #f9fafb;
+}
+
+.commandes-table tr {
+  border-bottom: 1px solid #f1f3f8;
+}
+
+.commande-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.commande-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: #e8eaf6;
+  color: #3949ab;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.commande-client {
+  font-weight: 600;
+  color: #222;
+}
+
+.commande-id {
+  font-size: 0.85rem;
+  color: #aab0c8;
+}
+
+.status {
+  padding: 4px 12px;
+  border-radius: 8px;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.status.livree {
+  background: #e6fcf5;
+  color: #0bb07b;
+}
+
+.status.en-cours {
+  background: #fffbe6;
+  color: #f7b924;
+}
+
+.status.annulee {
+  background: #ffe6e6;
+  color: #e74c3c;
+}
+
+.edit-btn,
+.delete-btn {
+  background: #f1f3f8;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  margin-right: 4px;
+}
+
+.edit-btn:hover {
+  background: #dbeafe;
+}
+
+.delete-btn:hover {
+  background: #ffe6e6;
+}
+
+.commandes-pagination {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.pagination-btn {
+  background: #f1f3f8;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 1rem;
+  color: #222;
+  cursor: pointer;
+}
+
+.pagination-btn.active {
+  background: #111;
+  color: #fff;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 2px 24px rgba(30,40,100,0.13);
+  z-index: 1001;
+  position: relative;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+
+// Order details modal
+.order-details-modal {
+  min-width: 500px;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #eee;
+
+  h3 {
+    margin: 0;
+    font-size: 1.3rem;
+  }
+
+  .close-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
+
+    &:hover {
+      color: #000;
+    }
+  }
+}
+
+.order-info {
+  background: #f9fafb;
+  padding: 16px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+
+  p {
+    margin: 6px 0;
+    font-size: 0.95rem;
+  }
+}
+
+.order-items {
+  margin-bottom: 20px;
+
+  .order-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: #f9fafb;
+    border-radius: 8px;
+    margin-bottom: 8px;
+  }
+
+  .item-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .item-qty {
+    font-weight: 700;
+    color: #666;
+  }
+
+  .item-name {
+    font-weight: 500;
+  }
+
+  .item-price {
+    color: #666;
+    font-size: 0.9rem;
+  }
+
+  .item-status select {
+    padding: 6px 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 0.9rem;
+  }
+}
+
+.order-total {
+  text-align: right;
+  font-size: 1.2rem;
+  padding: 16px 0;
+  border-top: 2px solid #eee;
+  margin-bottom: 16px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.close-btn-full {
+  background: #111;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 24px;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    background: #333;
+  }
+}
+
+.loading-state,
+.error-state,
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}
+
+.error-state {
+  color: #dc3545;
+}
+
+.delivery-type {
+  font-size: 0.85rem;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: #e3f2fd;
+  color: #1976d2;
+
+  &.retrait {
+    background: #f3e5f5;
+    color: #7b1fa2;
+  }
+}
+
+.status.preparation {
+  background: #fff3e0;
+  color: #ef6c00;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 991px) {
+  .commandes-list-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  
+  .commandes-list-actions {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  
+  .filter-select {
+    flex: 1;
+    min-width: 140px;
+  }
+  
+  .order-details-modal {
+    min-width: auto;
+    width: 90vw;
+    max-width: 500px;
+  }
+}
+
+@media (max-width: 767px) {
+  .commandes-list-container {
+    padding: 16px 12px;
+    border-radius: 12px;
+  }
+  
+  .commandes-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  
+  .commandes-table th,
+  .commandes-table td {
+    padding: 10px 8px;
+    font-size: 0.9rem;
+  }
+  
+  .commande-avatar {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+  
+  .modal-content {
+    padding: 20px 16px;
+    margin: 16px;
+    max-width: calc(100vw - 32px);
+  }
+  
+  .order-details-modal {
+    width: calc(100vw - 32px);
+  }
+}
+
+@media (max-width: 575px) {
+  .add-btn {
+    width: 100%;
+    padding: 10px 16px;
+  }
+  
+  .commandes-pagination {
+    justify-content: center;
+  }
+  
+  .order-items .order-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}

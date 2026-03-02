@@ -1,0 +1,52 @@
+<div class="auth-container">
+  <!-- Left Panel - Testimonial -->
+  <div class="auth-right" style="background-image: url('/assets/images/backgrounds/free.jpg'); background-size: cover; background-position: center 70%; background-repeat: no-repeat; image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges;">
+    <div class="testimonial-content">
+      <div class="testimonial-stars">★★★★★</div>
+      
+      <p class="testimonial-quote">
+        "Gérez votre boutique facilement avec des outils puissants et intuitifs."
+      </p>
+      
+      <div class="testimonial-author">Espace Boutique</div>
+      <div class="testimonial-position">Panel de gestion ShoppingMall</div>
+    </div>
+  </div>
+
+  <!-- Right Panel - Form -->
+  <div class="auth-left">
+    <div class="auth-title">Connexion Boutique</div>
+    <div class="auth-subtitle">Connectez-vous à votre espace de gestion.</div>
+
+    <form (ngSubmit)="submit()">
+      <div *ngIf="errorMessage" class="error-message" style="background: #f8d7da; color: #721c24; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+        {{ errorMessage }}
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-input" placeholder="Entrez votre email" [(ngModel)]="email" name="email" required />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Mot de passe</label>
+        <input type="password" class="form-input" placeholder="••••••••" [(ngModel)]="password" name="password" required />
+      </div>
+
+      <div class="form-options">
+        <div class="checkbox-wrapper">
+          <input type="checkbox" id="remember" [(ngModel)]="rememberMe" name="rememberMe" />
+          <label for="remember">Se souvenir de moi</label>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-signin" [disabled]="isLoading">
+        {{ isLoading ? 'Connexion...' : 'Se connecter' }}
+      </button>
+
+      <div class="signup-link">
+        Vous n'avez pas de compte ?<a [routerLink]="['/authentication/register']">Créer ma boutique</a>
+      </div>
+    </form>
+  </div>
+</div>
